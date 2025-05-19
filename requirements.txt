@@ -1,0 +1,10 @@
+Fabric
+Flask-SQLAlchemy
+Flask-WTF
+WTForms
+coverage
+# ecdsa
+# paramiko
+# pycrypto
+email_validator
+flask-wtf
