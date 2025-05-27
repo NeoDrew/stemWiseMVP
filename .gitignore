@@ -1,5 +1,12 @@
 *.pyc
-.DS_Store
-env
-venv
-.venv
+*.DS_Store
+*env
+*venv
+*.venv
+*__pycache__
+*_updated
+*.log
+*database.db
+*instance
+*node_modules
+*env.js
