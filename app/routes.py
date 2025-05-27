@@ -1,95 +1,52 @@
-#----------------------------------------------------------------------------#
-# Imports
-#----------------------------------------------------------------------------#
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session
+from app.forms import LoginForm, RegisterForm, ForgotForm, EnquiryForm
+from functools import wraps
 
-from flask import Flask, render_template, request, flash, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-import logging
-from logging import Formatter, FileHandler
-from app.forms import *
-import os
-from flask_wtf import FlaskForm
-from wtforms import StringField, validators
-
-# Define Enquiry Form
-from flask_wtf import FlaskForm
-from wtforms import StringField
-from wtforms.validators import DataRequired, Email, Regexp
-
-class EnquiryForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email(message='Invalid email address')])
-    phone = StringField('Phone', validators=[DataRequired(), Regexp(r'^\+?\d{10,15}$', message='Phone number must be entered')])
-
-
-# Login required decorator.
+main = Blueprint('main', __name__)
 
 def login_required(test):
     @wraps(test)
     def wrap(*args, **kwargs):
         if 'logged_in' in session:
             return test(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect(url_for('login'))
+        flash('You need to login first.')
+        return redirect(url_for('main.login'))
     return wrap
 
-#----------------------------------------------------------------------------#
-# Controllers.
-#----------------------------------------------------------------------------#
-
-
-@app.route('/')
+@main.route('/')
 def home():
     return render_template('pages/placeholder.home.html')
 
-@app.route('/about')
+@main.route('/about')
 def about():
     return render_template('pages/placeholder.about.html')
 
-@app.route('/login')
+@main.route('/login')
 def login():
     form = LoginForm(request.form)
     return render_template('forms/login.html', form=form)
 
-@app.route('/register')
+@main.route('/register')
 def register():
     form = RegisterForm(request.form)
     return render_template('forms/register.html', form=form)
 
-@app.route('/forgot')
+@main.route('/forgot')
 def forgot():
     form = ForgotForm(request.form)
     return render_template('forms/forgot.html', form=form)
 
-@app.route('/enquiry', methods=['GET', 'POST'])
+@main.route('/enquiry', methods=['GET', 'POST'])
 def enquiry():
     form = EnquiryForm()
-    if form.validate_on_submit():
-        # Process form
-        return redirect(url_for('home'))
+    if request.method == 'POST' and form.validate_on_submit():
+        return redirect(url_for('main.home'))
     return render_template('forms/enquiry.html', form=form)
 
-
-# Error handlers.
-
-
-@app.errorhandler(500)
-def internal_error(error):
-    #db_session.rollback()
-    return render_template('errors/500.html'), 500
-
-
-@app.errorhandler(404)
+@main.app_errorhandler(404)
 def not_found_error(error):
     return render_template('errors/404.html'), 404
 
-if not app.debug:
-    file_handler = FileHandler('error.log')
-    file_handler.setFormatter(
-        Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
-    )
-    app.logger.setLevel(logging.INFO)
-    file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
-    app.logger.info('errors')
+@main.app_errorhandler(500)
+def internal_error(error):
+    return render_template('errors/500.html'), 500

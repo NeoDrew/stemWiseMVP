@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from wtforms import StringField, PasswordField
-from wtforms.validators import DataRequired, EqualTo, Length
+from wtforms.validators import DataRequired, EqualTo, Length, Email, Regexp
 
 # Set your classes here.
 
@@ -31,3 +31,9 @@ class ForgotForm(Form):
     email = StringField(
         'Email', validators=[DataRequired(), Length(min=6, max=40)]
     )
+
+# Enquiry Form
+class EnquiryForm(Form):
+    name = StringField('Name', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    phone = StringField('Phone', validators=[DataRequired(), Regexp(r'^\+?\d{10,15}$', message='Invalid phone')])
