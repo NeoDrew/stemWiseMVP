@@ -25,3 +25,5 @@ yarn-error.log*
 
 # App public config files (replaced during CI pipeline builds)
 /public/env.js
+*node_modules
+*env.js
