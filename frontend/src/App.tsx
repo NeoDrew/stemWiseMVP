@@ -11,6 +11,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import Home from 'pages/Home';
 
 import theme from 'theme';
+import FindTutor from 'pages/FindTutor';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           createRoutesFromElements(
             <>
               <Route path="/Home" element={<Home />} />
+              <Route path="/tutors" element={<FindTutor />} />
               <Route path="*" element={<Home />} />
             </>,
           ),

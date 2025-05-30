@@ -14,12 +14,14 @@ import {
 
 import AppContainer from 'components/appContainer';
 import Header from 'components/header';
+import Footer from 'components/footer';
+import TutoringProcessSection from 'pages/Home/components/tutoringProcessSelection';
 
 const Home = () => {
   return (
     <AppContainer>
-      <Box minHeight="100vh">
-        <Box shadow="xl"><Header /></Box>
+      <Box minHeight="100vh" position="relative">
+        <Box><Header /></Box>
 
         <Box
           height="calc(100vh - 65px)"
@@ -29,6 +31,7 @@ const Home = () => {
           bgRepeat="no-repeat"
           position="relative"
         >
+          {/* Dark overlay */}
           <Box
             position="absolute"
             top={0}
@@ -37,9 +40,10 @@ const Home = () => {
             height="100%"
             bg="rgba(0, 0, 0, 0.5)"
             zIndex={0}
+
           />
 
-          {/* Centered content */}
+          {/* Content */}
           <Flex
             position="relative"
             zIndex={1}
@@ -56,10 +60,7 @@ const Home = () => {
                 Qualified tutors across subjects, levels and learning experience. Tailored learning starts here.
               </Text>
               <InputGroup maxW="500px" w="100%">
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<Icon as={BiSearch} color="gray.400" />}
-                />
+                <InputLeftElement pointerEvents="none" children={<Icon as={BiSearch} color="gray.400" />} />
                 <Input
                   type="text"
                   placeholder="Search by subject, grade, or location"
@@ -72,25 +73,39 @@ const Home = () => {
               </InputGroup>
             </VStack>
           </Flex>
+          <Box
+            position="absolute"
+            bottom={0}
+            left={0}
+            width="100%"
+            overflow="hidden"
+            lineHeight={0}
+            zIndex={1}
+            mb={-2}
+          >
+            <svg
+              viewBox="0 0 1440 60"
+              preserveAspectRatio="none"
+              style={{ width: '100%', height: '50px', display: 'block' }}
+            >
+              <path
+                d="M0,0 
+         Q720,60 1440,0 
+         L1440,60 
+         L0,60 
+         Z"
+                fill="var(--chakra-colors-white-100)"
+              />
+            </svg>
+          </Box>
+
         </Box>
       </Box>
 
 
-      <Box
-        height="calc(100vh - 65px)"
-        backgroundColor="grey.100"
-        position="relative"
-      >
-        <Box
-          position="absolute"
-          top={0}
-          left={0}
-          width="100%"
-          height="100%"
-          zIndex={0}
-        />
+      <TutoringProcessSection />
 
-      </Box>
+      <Footer />
     </AppContainer>
   );
 };

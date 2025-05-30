@@ -24,6 +24,7 @@ const Header = () => {
       align="center"
       boxShadow="sm"
     >
+      {/* Logo */}
       <Link to="/">
         <Image
           src="/logo.png"
@@ -34,32 +35,47 @@ const Header = () => {
 
       <Spacer />
 
-      <HStack spacing={4}>
-        <Link to="/tutor-login">
+      <HStack spacing={4} align="center">
+        {/* Study Tools Nav Links */}
+        <Link to="/study-notes">
+          <Button variant="ghost" size="sm">Study Notes</Button>
+        </Link>
+        <Link to="/revision-questions">
+          <Button variant="ghost" size="sm">Revision Questions</Button>
+        </Link>
+        <Link to="/study-tools">
+          <Button variant="ghost" size="sm">Study Tools</Button>
+        </Link>
+
+        {/* Distinct "Find a Tutor" */}
+        <Link to="/tutors">
           <Button
-            textColor="grey.500"
-            _hover={{ textColor: "grey.100", background: "blue.300" }}
-            borderColor="grey.200"
-            variant="outline"
+            colorScheme="blue"
             size="sm"
+            fontWeight="bold"
+            px={4}
           >
-            Tutor Login
+            Find a Tutor
           </Button>
         </Link>
 
-        <Link to="/student-login">
-          <Button
-            textColor="grey.500"
-            _hover={{ textColor: "grey.100", background: "green.300" }}
-            borderColor="grey.200"
+        {/* Login Dropdown Menu */}
+        <Menu>
+          <MenuButton
+            as={Button}
             variant="outline"
             size="sm"
+            borderColor="grey.200"
           >
-            Student Login
-          </Button>
-        </Link>
+            Login
+          </MenuButton>
+          <MenuList>
+            <MenuItem as={Link} to="/student-login">Student Login</MenuItem>
+            <MenuItem as={Link} to="/tutor-login">Tutor Login</MenuItem>
+          </MenuList>
+        </Menu>
 
-        {/* Triple bar dropdown menu */}
+        {/* Triple-bar Dropdown */}
         <Menu>
           <MenuButton
             as={IconButton}

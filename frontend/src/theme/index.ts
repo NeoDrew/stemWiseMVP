@@ -22,6 +22,8 @@ const theme = extendTheme({
     global: () => ({
       body: {
         bg: 'white.200',
+      }, html: {
+        overflowY: "scroll",
       },
     }),
   },
