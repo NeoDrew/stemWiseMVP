@@ -36,7 +36,6 @@ const PsychometricTest = () => {
                 textAlign="center"
                 shadow="lg"
             >
-                {/* AI Gradient Letters */}
                 <Box
                     position="absolute"
                     top={2}
